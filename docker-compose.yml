@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .  # Asegúrate de que el contexto esté apuntando al directorio raíz
+      dockerfile: client/Dockerfile
+    ports:
+      - "4173:4173"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .  # El contexto debe ser el directorio raíz, donde están los archivos package.json
+      dockerfile: server/Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=prueba123
+      - DB_NAME=tasksdb
+    command: ["npm", "start"]
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: prueba123
+      MYSQL_DATABASE: tasksdb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql-data:
+

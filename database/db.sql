@@ -1,4 +1,4 @@
---Tabla TASK
+/* Tabla TASK */
 
 CREATE TABLE tasks(
     id INTEGER PRIMARY KEY AUTO_INCREMENT, 
